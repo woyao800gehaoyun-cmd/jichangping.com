@@ -1,0 +1,20 @@
+---
+import { Plane, Radio } from 'lucide-astro';
+import { SITE, categories } from '../data/site';
+---
+<footer>
+  <div class="container status-board"><div><Radio size={16}/><span>SWALLOW TRANSIT INFORMATION SYSTEM</span></div><div><b>CN-HUB</b><span>ONLINE</span></div><div><b>LAST SYNC</b><span>{new Date().toISOString().slice(0, 10)}</span></div></div>
+  <div class="container footer-grid">
+    <div class="intro"><a class="footer-brand" href="/"><Plane size={22}/>{SITE.name}</a><p>{SITE.description}</p><p class="fine">本站仅提供信息与评测参考。请遵守所在地法律法规与组织安全政策。</p></div>
+    <div><h2>TERMINALS / 内容</h2>{categories.slice(0, 4).map((c) => <a href={`/category/${c.slug}/`}>{c.name}</a>)}</div>
+    <div><h2>TRANSIT / 航站</h2><a href="/topics/">专题航线</a><a href="/brands/">品牌航站</a><a href="/about/">关于我们</a><a href="/editorial-policy/">评测雷达</a><a href="/disclosure/">推广披露</a></div>
+    <div><h2>SERVICE / 服务</h2><a href="/privacy/">隐私说明</a><a href="/rss.xml">RSS 航报</a><a href="/sitemap-index.xml">站点地图</a><a href="mailto:editor@example.com">联系塔台</a></div>
+  </div>
+  <div class="container bottom"><span>© {new Date().getFullYear()} {SITE.name}</span><span>ROUTES CHANGE · DATA STAYS REVIEWABLE</span></div>
+</footer>
+<style>
+  footer { padding: 0 0 24px; color: #c2d1df; background: #030711; border-top: 1px solid #29435f; }
+  .status-board { display: grid; grid-template-columns: 1fr auto auto; gap: 35px; align-items: center; min-height: 58px; margin-bottom: 54px; border-bottom: 1px solid #17283c; font-family: var(--mono); font-size: .62rem; letter-spacing: .08em; }.status-board > div { display: flex; align-items: center; gap: 10px; }.status-board svg { color: var(--green); }.status-board b { color: #607991; }.status-board span { color: #9eb2c5; }
+  .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 48px; }.footer-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--white); font-size: 1.3rem; font-weight: 800; }.footer-brand svg { color: var(--accent); transform: rotate(40deg); }.intro p { max-width: 520px; color: #8196a9; font-size: .84rem; }.fine { font-size: .72rem !important; }.footer-grid h2 { margin: 5px 0 16px; color: #557088; font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; }.footer-grid > div:not(.intro) a { display: block; margin: 9px 0; color: #a6b8c9; font-size: .8rem; }.footer-grid a:hover { color: var(--green); }.bottom { display: flex; justify-content: space-between; margin-top: 48px; padding-top: 19px; border-top: 1px solid #17283c; color: #50657a; font-family: var(--mono); font-size: .58rem; letter-spacing: .08em; }
+  @media (max-width: 760px) { .status-board { grid-template-columns: 1fr; gap: 7px; padding: 14px 0; }.footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }.intro { grid-column: 1 / -1; }.bottom { display: block; }.bottom span { display: block; margin-top: 6px; } }
+</style>

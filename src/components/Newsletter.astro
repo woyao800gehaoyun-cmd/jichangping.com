@@ -1,0 +1,8 @@
+---
+import { ArrowRight, Radio } from 'lucide-astro';
+---
+<section class="newsletter" aria-labelledby="newsletter-title"><div class="container inner"><div class="icon"><Radio size={24}/><i></i></div><div><p class="eyebrow">TOWER BROADCAST / 塔台广播</p><h2 id="newsletter-title" class="display">每周接收一封航线更新。</h2><p>新评测、线路观察和实用教程。不轰炸邮箱，可随时取消接收。</p></div><form><label class="sr-only" for="email">邮箱地址</label><input id="email" type="email" placeholder="ENTER EMAIL / 输入邮箱" required /><button type="submit" aria-label="订阅"><ArrowRight size={20}/></button></form></div></section>
+<style>
+  .newsletter { padding: 50px 0; color: var(--ink); background: #0a1526; border-top: 1px solid #28435d; border-bottom: 1px solid #28435d; }.inner { display: grid; grid-template-columns: auto 1fr minmax(280px,390px); align-items: center; gap: 30px; }.icon { position:relative;display:grid;width:58px;height:58px;place-items:center;border:1px solid #34546e;color:var(--green);background:#07101d}.icon i{position:absolute;inset:7px;border:1px dashed #34546e;border-radius:50%}.eyebrow{margin-bottom:6px}h2{max-width:620px;margin:0;font-size:clamp(1.45rem,2.5vw,2rem)}p{margin:8px 0 0;color:#8fa5b9;font-size:.82rem}form{display:grid;grid-template-columns:1fr 48px;border:1px solid #38566f;background:#050d19}input{width:100%;padding:14px;border:0;outline:0;color:white;background:transparent;font-family:var(--mono);font-size:.72rem}input::placeholder{color:#687f94}button{border:0;border-left:1px solid #38566f;color:#06101c;background:var(--accent);cursor:pointer}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  @media(max-width:800px){.inner{grid-template-columns:1fr}.icon{display:none}}
+</style>

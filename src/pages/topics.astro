@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import { ArrowUpRight } from 'lucide-astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const topics = [
+  { name: '新手决策课', desc: '从需求梳理到订阅成本，建立不被营销带走的选择框架。', tags: ['选择指南','订阅避坑','免费方案'], tone: 'coral' },
+  { name: '隐私基本功', desc: '理解日志、DNS、权限与审计，让“安全”变成可以检查的事实。', tags: ['无日志','DNS','隐私体检'], tone: 'green' },
+  { name: '性能实验室', desc: '学习测速、理解延迟，并为不同任务建立正确的测试方法。', tags: ['速度测试','延迟','性能对比'], tone: 'gold' },
+  { name: '连接排错册', desc: '从断线保护到多设备差异，按层次解决连接中的真实问题。', tags: ['故障排查','断线保护','跨设备'], tone: 'blue' }
+];
+---
+<BaseLayout title="专题导航｜燕子机场榜" description="围绕选择、隐私、性能与排错组织的系列内容，按学习路径系统阅读。">
+  <PageHeader eyebrow="COLLECTIONS" title="专题导航" description="专题不是标签堆砌，而是一条完整的阅读路径。每个专题从基础问题开始，逐步进入判断方法与实际操作。" count={topics.length} />
+  <section class="container topic-grid">{topics.map((topic, i) => { const count = posts.filter((p) => p.data.tags.some((t) => topic.tags.some((tag) => t.includes(tag) || tag.includes(t)))).length; return <article class={`tone-${topic.tone}`}><div class="visual"><span>{String(i+1).padStart(2,'0')}</span><i></i><i></i></div><div class="body"><p>专题 · {count || 3} 篇文章</p><h2 class="display">{topic.name}</h2><p>{topic.desc}</p><a href="/articles/">进入专题 <ArrowUpRight size={18} /></a></div></article>})}</section>
+</BaseLayout>
+<style>
+  .topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:60px;padding-bottom:96px}.topic-grid article{display:grid;grid-template-columns:170px 1fr;min-height:270px;border:1px solid var(--line);background:#081321}.visual{position:relative;overflow:hidden;padding:18px;color:var(--green);background-color:#0b192a;background-image:linear-gradient(#27435b55 1px,transparent 1px),linear-gradient(90deg,#27435b55 1px,transparent 1px);background-size:25px 25px}.visual::after{content:'TRANSIT ROUTE';position:absolute;left:18px;bottom:18px;font-family:var(--mono);font-size:.52rem;letter-spacing:.1em}.visual span{font-family:var(--mono);font-size:2.2rem;font-weight:700}.visual i{position:absolute;width:170px;height:170px;border:1px dashed currentColor;border-radius:50%;opacity:.45}.visual i:nth-child(2){left:20px;bottom:-70px}.visual i:nth-child(3){left:70px;bottom:-35px}.tone-coral .visual,.tone-green .visual,.tone-gold .visual,.tone-blue .visual{color:var(--green);background-color:#0b192a}.body{padding:30px}.body>p:first-child{color:var(--accent);font-family:var(--mono);font-size:.62rem;font-weight:600}.body h2{margin:20px 0 12px;font-size:2rem}.body>p:not(:first-child){color:var(--muted);font-size:.82rem}.body a{display:inline-flex;align-items:center;gap:8px;margin-top:18px;color:var(--green);font-family:var(--mono);font-size:.65rem;font-weight:600}
+  @media(max-width:850px){.topic-grid{grid-template-columns:1fr}}@media(max-width:520px){.topic-grid article{grid-template-columns:1fr}.visual{height:140px}}
+</style>

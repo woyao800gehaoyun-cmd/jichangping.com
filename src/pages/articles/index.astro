@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { categories } from '../../data/site';
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a,b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+<BaseLayout title="文章库｜燕子机场榜" description="浏览燕子机场榜全部机场评测、隐私指南、对比文章和实用教程。">
+  <PageHeader eyebrow="ALL STORIES" title="文章库" description="从基础概念到进阶排错，从购买决策到隐私审查。所有文章按统一编辑规范撰写，并标明发布时间与阅读成本。" count={posts.length} />
+  <div class="container filters"><a class="active" href="/articles/">全部</a>{categories.map((c) => <a href={`/category/${c.slug}/`}>{c.name}</a>)}</div>
+  <section class="container article-list"><div class="grid-3">{posts.map((post, i) => <ArticleCard post={post} index={i} />)}</div></section>
+</BaseLayout>
+<style>
+  .filters{display:flex;gap:1px;padding:0;overflow-x:auto;border:1px solid var(--line);border-top:0;background:var(--line)}.filters a{flex:0 0 auto;padding:13px 18px;color:#7890a5;background:#07111f;font-family:var(--mono);font-size:.63rem;font-weight:600;letter-spacing:.05em}.filters a:hover,.filters .active{color:#07101a;background:var(--accent)}.article-list{padding-top:58px;padding-bottom:96px}.grid-3{row-gap:24px}
+</style>

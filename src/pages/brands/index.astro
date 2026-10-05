@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import { ArrowUpRight, ClipboardCheck, Scale, ShieldCheck } from 'lucide-astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+const brands = await getCollection('brands', ({ data }) => !data.draft);
+const dimensions = [
+  { icon: ShieldCheck, title: '隐私与安全', text: '政策、默认设置、协议、审计范围与历史响应。' },
+  { icon: ClipboardCheck, title: '实际体验', text: '跨设备安装、连接稳定、恢复能力与任务表现。' },
+  { icon: Scale, title: '价格与边界', text: '首期、续费、退款、限制和退出成本一起核对。' }
+];
+---
+<BaseLayout title="机场榜单｜燕子机场榜" description="以统一框架整理机场与网络工具品牌资料、实测结论、适用人群和主要限制。">
+  <PageHeader eyebrow="AIRPORT RANK" title="机场榜单" description="不做 Logo 墙，也不按佣金排序。每份档案使用同一套核对框架，并标明资料复查时间。" count={brands.length} />
+  <section class="container principles"><div class="grid-3">{dimensions.map(({icon:Icon,title,text}) => <article><Icon size={23}/><h2>{title}</h2><p>{text}</p></article>)}</div></section>
+  <section class="container brand-list">
+    {brands.length ? brands.map((brand) => <a href={`/brands/${brand.id}/`}><span>{brand.data.status}</span><h2 class="display">{brand.data.name}</h2><p>{brand.data.description}</p><ArrowUpRight size={20}/></a>) : <div class="empty"><p class="eyebrow">COMING AFTER VERIFICATION</p><h2 class="display">具体品牌档案将在完成事实核验后发布。</h2><p>内容模型和页面模板已经就绪。我们不会用虚构评分或未经核对的价格填充页面。</p></div>}
+  </section>
+</BaseLayout>
+<style>
+  .principles{padding-top:52px}.principles article{padding:25px;border:1px solid var(--line);background:#081321}.principles svg{color:var(--green)}.principles h2{margin:28px 0 8px;font-size:1rem}.principles p{color:var(--muted);font-size:.79rem}.brand-list{padding-top:40px;padding-bottom:96px}.brand-list>a{display:grid;grid-template-columns:120px 1fr 1.2fr auto;align-items:center;gap:24px;padding:24px;border:1px solid var(--line);border-bottom:0;background:#07111e}.brand-list>a:last-child{border-bottom:1px solid var(--line)}.brand-list>a:hover{background:#0b1a2a}.brand-list span{color:var(--accent);font-family:var(--mono);font-size:.62rem}.brand-list h2,.brand-list p{margin:0}.brand-list p{color:var(--muted);font-size:.8rem}.empty{position:relative;overflow:hidden;padding:60px;border:1px solid var(--line);background:#081321}.empty::after{content:'NO FLIGHTS SCHEDULED';position:absolute;right:-25px;bottom:20px;color:#1a3044;font-family:var(--mono);font-size:2rem;font-weight:700;transform:rotate(-5deg)}.empty h2{position:relative;z-index:2;max-width:700px;margin:0;font-size:2.5rem}.empty>p:last-child{position:relative;z-index:2;max-width:650px;color:var(--muted)}@media(max-width:700px){.brand-list>a{grid-template-columns:1fr}.empty{padding:30px}.empty h2{font-size:2rem}}
+</style>

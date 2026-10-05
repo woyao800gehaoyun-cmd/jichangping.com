@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
+  publishedAt?: Date;
+  updatedAt?: Date;
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  image = '/og-default.svg',
+  canonical = Astro.url.pathname,
+  type = 'website',
+  publishedAt,
+  updatedAt
+} = Astro.props;
+const canonicalURL = new URL(canonical, Astro.site ?? SITE.url);
+const imageURL = new URL(image, Astro.site ?? SITE.url);
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': type === 'article' ? 'Article' : 'WebSite',
+  headline: title,
+  name: title,
+  description,
+  url: canonicalURL,
+  image: imageURL,
+  inLanguage: 'zh-CN',
+  ...(type === 'article' ? { datePublished: publishedAt, dateModified: updatedAt ?? publishedAt, author: { '@type': 'Organization', name: SITE.author } } : {})
+};
+---
+<!doctype html>
+<html lang="zh-CN" data-theme="autumn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <script is:inline>
+      (() => {
+        const month = new Date().getMonth() + 1;
+        const automatic = month >= 3 && month <= 5 ? 'spring' : month >= 6 && month <= 8 ? 'summer' : month >= 9 && month <= 11 ? 'autumn' : 'winter';
+        try { document.documentElement.dataset.theme = localStorage.getItem('swallow-season') || automatic; }
+        catch { document.documentElement.dataset.theme = automatic; }
+      })();
+    </script>
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} RSS`} href="/rss.xml" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={imageURL} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">跳到正文</a>
+    <Header />
+    <main id="content"><slot /></main>
+    <Footer />
+  </body>
+</html>

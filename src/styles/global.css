@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --season-base: #fff8ed;
+  --season-surface: #fffdf8;
+  --season-surface-2: #f9ead6;
+  --season-hero: #fff2de;
+  --season-route: #75402a;
+  --season-line: #e3ccb0;
+  --season-line-bright: #c59b72;
+  --season-text: #49301f;
+  --season-muted: #826b59;
+  --season-primary: #cf6b28;
+  --season-secondary: #9b721d;
+  --season-glow: #e68a3b2b;
+  --season-pattern: url('/season-autumn.svg');
+  --season-hero-image: url('/season-autumn-hero.svg');
+  --paper: var(--season-base);
+  --paper-2: var(--season-surface);
+  --ink: var(--season-text);
+  --muted: var(--season-muted);
+  --line: var(--season-line);
+  --line-bright: var(--season-line-bright);
+  --accent: var(--season-primary);
+  --accent-dark: color-mix(in srgb, var(--season-primary) 72%, black);
+  --green: var(--season-secondary);
+  --green-soft: color-mix(in srgb, var(--season-secondary) 14%, var(--season-base));
+  --yellow: var(--season-primary);
+  --white: var(--season-surface);
+  --panel: var(--season-surface);
+  --panel-2: var(--season-surface-2);
+  --danger: #ff6b6b;
+  --max: 1240px;
+  --serif: 'Noto Sans SC', system-ui, sans-serif;
+  --sans: 'Noto Sans SC', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+html[data-theme='spring'] {
+  --season-base: #f4f9f5;
+  --season-surface: #ffffff;
+  --season-surface-2: #e8f4ed;
+  --season-hero: #edf8f1;
+  --season-route: #285846;
+  --season-line: #c7ded0;
+  --season-line-bright: #8fbaa3;
+  --season-text: #17352a;
+  --season-muted: #647c71;
+  --season-primary: #df6f98;
+  --season-secondary: #278969;
+  --season-glow: #ff9fbd2e;
+  --season-pattern: url('/season-spring.svg');
+  --season-hero-image: url('/season-spring-hero.svg');
+}
+html[data-theme='summer'] {
+  --season-base: #edf9fc;
+  --season-surface: #ffffff;
+  --season-surface-2: #dff3f7;
+  --season-hero: #e6f8fb;
+  --season-route: #0c6171;
+  --season-line: #b9dde5;
+  --season-line-bright: #77bac9;
+  --season-text: #103642;
+  --season-muted: #5d7f87;
+  --season-primary: #e2aa25;
+  --season-secondary: #078fa8;
+  --season-glow: #41cce82b;
+  --season-pattern: url('/season-summer.svg');
+  --season-hero-image: url('/season-summer-hero.svg');
+}
+html[data-theme='autumn'] {
+  --season-base: #fff8ed;
+  --season-surface: #fffdf8;
+  --season-surface-2: #f9ead6;
+  --season-hero: #fff2de;
+  --season-route: #75402a;
+  --season-line: #e3ccb0;
+  --season-line-bright: #c59b72;
+  --season-text: #49301f;
+  --season-muted: #826b59;
+  --season-primary: #cf6b28;
+  --season-secondary: #9b721d;
+  --season-glow: #e68a3b2b;
+  --season-pattern: url('/season-autumn.svg');
+  --season-hero-image: url('/season-autumn-hero.svg');
+}
+html[data-theme='winter'] {
+  --season-base: #f2f7fb;
+  --season-surface: #ffffff;
+  --season-surface-2: #e5eff7;
+  --season-hero: #eaf3f9;
+  --season-route: #315b77;
+  --season-line: #c5d8e7;
+  --season-line-bright: #8fb3ca;
+  --season-text: #20394d;
+  --season-muted: #6a8091;
+  --season-primary: #86c9e8;
+  --season-secondary: #367da4;
+  --season-glow: #86c9e82d;
+  --season-pattern: url('/season-winter.svg');
+  --season-hero-image: url('/season-winter-hero.svg');
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; color-scheme: light; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: var(--season-pattern), linear-gradient(color-mix(in srgb, var(--line) 32%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--line) 32%, transparent) 1px, transparent 1px), radial-gradient(circle at 15% 5%, var(--season-glow) 0, transparent 28rem);
+  background-size: 320px 320px, 48px 48px, 48px 48px, auto;
+  font-family: var(--sans);
+  line-height: 1.65;
+}
+body::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, transparent 0, color-mix(in srgb, var(--paper) 80%, transparent) 85%, var(--paper) 100%); }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button, input { font: inherit; }
+.container { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+.eyebrow { margin: 0 0 12px; color: var(--green); font-family: var(--mono); font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .16em; }
+.eyebrow::before { content: '●'; margin-right: 8px; color: var(--accent); font-size: .55rem; }
+.display { font-family: var(--serif); font-weight: 800; line-height: 1.12; letter-spacing: -.035em; }
+.muted { color: var(--muted); }
+.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 0 18px; border: 1px solid var(--green); border-radius: 2px; background: var(--green); color: #06101c; font-family: var(--mono); font-size: .76rem; font-weight: 700; letter-spacing: .04em; cursor: pointer; transition: .2s ease; }
+.button:hover { color: var(--ink); background: transparent; box-shadow: 0 0 24px #4de1ff22; }
+.button.secondary { border-color: var(--line-bright); background: transparent; color: var(--ink); }
+.button.secondary:hover { border-color: var(--green); color: var(--green); }
+.tag { display: inline-flex; align-items: center; min-height: 26px; padding: 0 9px; border: 1px solid var(--line); border-radius: 2px; color: #afc3d8; background: #0a1423; font-family: var(--mono); font-size: .68rem; font-weight: 500; }
+.section { padding-block: 82px; }
+.section-head { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: 34px; }
+.section-head h2 { max-width: 720px; margin: 0; font-size: clamp(1.9rem, 3vw, 2.75rem); }
+.section-head p { max-width: 470px; margin: 0; color: var(--muted); font-size: .86rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.skip-link { position: fixed; left: 12px; top: -60px; z-index: 100; padding: 10px 14px; background: var(--accent); color: #07101c; }
+.skip-link:focus { top: 12px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+::selection { color: #06101c; background: var(--green); }
+@keyframes blink { 50% { opacity: .25; } }
+@keyframes scan { from { transform: translateY(-100%); } to { transform: translateY(100%); } }
+
+/* Seasonal surface layer: keeps every page in the selected visual system. */
+html[data-theme] :where(.site-header) { background: color-mix(in srgb, var(--season-base) 92%, transparent) !important; border-color: var(--line) !important; }
+html[data-theme] :where(.top-strip, footer) { background: var(--season-route) !important; border-color: color-mix(in srgb, var(--season-route) 72%, white) !important; }
+html[data-theme] :where(.hero, .page-head, .article-hero, .brand-head) { background-color: var(--season-hero) !important; background-image: var(--season-pattern), linear-gradient(color-mix(in srgb, var(--line) 24%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--line) 24%, transparent) 1px, transparent 1px) !important; background-size: 320px 320px, 40px 40px, 40px 40px !important; background-position: right top, 0 0, 0 0 !important; border-color: var(--line) !important; }
+html[data-theme] :where(.departures, .featured-section, .control-tower) { background-color: var(--season-base) !important; border-color: var(--line) !important; }
+html[data-theme] :where(.terminals, .latest, .related, .newsletter) { background-color: var(--season-surface) !important; border-color: var(--line) !important; }
+html[data-theme] :where(.ticket, .terminal-grid a, .topic-grid article, .principles article, .search-box, #results, .info-grid aside, .empty) { background-color: var(--season-surface) !important; border-color: var(--line) !important; }
+html[data-theme] :where(.route, .visual, .fids, .tower-screen) { background-color: var(--season-route) !important; background-image: var(--season-pattern), radial-gradient(circle at 30% 20%, color-mix(in srgb, white 25%, transparent) 0 1px, transparent 2px) !important; background-size: 260px 260px, 38px 38px !important; }
+html[data-theme] :where(.flight-strip, .fids-head, .ticker) { background-color: var(--season-route) !important; border-color: color-mix(in srgb, var(--season-route) 70%, white) !important; }
+html[data-theme] :where(.boarding-pass) { background: color-mix(in srgb, #eaf3f5 88%, var(--season-primary)) !important; box-shadow: 15px 15px 0 color-mix(in srgb, var(--season-primary) 20%, transparent) !important; }
+html[data-theme] :where(.icon-button, .method-link) { background-color: var(--season-surface) !important; border-color: var(--line-bright) !important; }
+html[data-theme] :where(.route-globe .globe, .radar) { background-color: var(--season-surface-2) !important; border-color: var(--line-bright) !important; box-shadow: inset 0 0 80px var(--season-glow), 0 18px 45px color-mix(in srgb, var(--season-route) 15%, transparent) !important; }
+html[data-theme] :where(.ticket:hover, .terminal-grid a:hover, #results a:hover) { border-color: var(--season-secondary) !important; box-shadow: 0 16px 34px color-mix(in srgb, var(--season-route) 18%, transparent), 0 0 25px var(--season-glow) !important; }
+html[data-theme] :where(.site-header nav a, .brand small, .lead, .quick-links, .coordinates, .desc, .deck, .article-meta, .back) { color: var(--season-muted) !important; }
+html[data-theme] :where(.site-header nav a:hover, .site-header nav a.active) { color: var(--season-text) !important; background: var(--season-surface-2) !important; }
+html[data-theme] :where(.top-strip, .top-strip span, footer, footer p, footer a) { color: #eaf5f4 !important; }
+html[data-theme] :where(.hero-search) { background: var(--season-surface) !important; border-color: var(--line-bright) !important; box-shadow: 0 14px 36px color-mix(in srgb, var(--season-route) 14%, transparent) !important; }
+html[data-theme] :where(.hero-search input, .search-box input) { color: var(--season-text) !important; }
+html[data-theme] :where(.route-map svg) { background: var(--season-route) !important; }
+html[data-theme] :where(.fids h3, .tower-screen span, .tower-screen b) { color: #edf8ff !important; }
+html[data-theme] :where(.fids a:hover) { background: color-mix(in srgb, var(--season-route) 82%, white) !important; }
+html[data-theme] :where(.flight-strip b, .flight-strip > .container > span, .fids-head span, .ticker div) { color: #f5fbff !important; }
+html[data-theme] :where(.flight-strip small, .flight-strip strong) { color: #d3e2ea !important; }
+html[data-theme] :where(.flight-strip em) { color: #ffd7a1 !important; }
+html[data-theme] :where(.flight-strip em.stable) { color: #b9f0c9 !important; }
+html[data-theme] :where(.quick-links span) { color: color-mix(in srgb, var(--season-muted) 75%, var(--season-text)) !important; }
+html[data-theme] :where(.quick-links a) { color: var(--season-secondary) !important; }
+
+/* Full-scene seasonal art and deliberately different layouts. */
+html[data-theme] :where(.hero) {
+  background-image: linear-gradient(90deg, color-mix(in srgb, var(--season-hero) 48%, transparent), color-mix(in srgb, var(--season-hero) 12%, transparent)), var(--season-hero-image) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+html[data-theme] :where(.page-head, .article-hero) {
+  background-image: linear-gradient(90deg, color-mix(in srgb, var(--season-hero) 94%, transparent) 0 42%, color-mix(in srgb, var(--season-hero) 62%, transparent)), var(--season-hero-image) !important;
+  background-size: cover !important;
+  background-position: center 45% !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Spring: soft garden terminal, floating rounded panels and petal cards. */
+html[data-theme='spring'] :where(.hero-grid) { grid-template-columns: minmax(0, 690px) 1fr !important; gap: 42px !important; padding-top: 34px !important; padding-bottom: 70px !important; }
+html[data-theme='spring'] :where(.hero-copy) { padding: 42px !important; border: 1px solid #b8d8c7 !important; border-radius: 32px !important; background: #ffffffd9 !important; box-shadow: 0 24px 70px #386c5230 !important; backdrop-filter: blur(12px); }
+html[data-theme='spring'] :where(.route-globe) { opacity: .42; transform: scale(.82); }
+html[data-theme='spring'] :where(.ticket) { border-radius: 24px !important; box-shadow: 0 14px 34px #386c5217 !important; }
+html[data-theme='spring'] :where(.ticket::before, .ticket::after) { display: none !important; }
+html[data-theme='spring'] :where(.ticket .route) { border-radius: 23px 23px 0 0 !important; }
+html[data-theme='spring'] :where(.terminal-grid) { gap: 18px !important; border: 0 !important; background: transparent !important; }
+html[data-theme='spring'] :where(.terminal-grid a) { border: 1px solid var(--line) !important; border-radius: 26px 7px 26px 7px !important; }
+html[data-theme='spring'] :where(.fids, .tower-screen) { overflow: hidden; border-radius: 20px !important; }
+
+/* Summer: bright coastal runway, single angular command panel and sharp cards. */
+html[data-theme='summer'] :where(.hero-grid) { display: block !important; padding-top: 74px !important; padding-bottom: 96px !important; }
+html[data-theme='summer'] :where(.hero-copy) { max-width: 735px; padding: 44px 64px 44px 44px !important; border-left: 7px solid var(--accent) !important; background: #ffffffd4 !important; box-shadow: 24px 24px 0 #078fa826 !important; clip-path: polygon(0 0, 92% 0, 100% 16%, 100% 100%, 0 100%); backdrop-filter: blur(8px); }
+html[data-theme='summer'] :where(.route-globe) { display: none !important; }
+html[data-theme='summer'] :where(.ticket) { border-top: 6px solid var(--green) !important; border-radius: 0 !important; box-shadow: 10px 10px 0 #078fa81c !important; }
+html[data-theme='summer'] :where(.ticket::before, .ticket::after) { display: none !important; }
+html[data-theme='summer'] :where(.terminal-grid) { grid-template-columns: repeat(5, 1fr) !important; gap: 10px !important; border: 0 !important; background: transparent !important; }
+html[data-theme='summer'] :where(.terminal-grid a) { border: 1px solid var(--line) !important; clip-path: polygon(0 0, 88% 0, 100% 12%, 100% 100%, 0 100%); }
+html[data-theme='summer'] :where(.fids) { border-left: 7px solid var(--accent) !important; box-shadow: 16px 16px 0 #078fa81c !important; }
+
+/* Autumn: paper boarding pass over a cinematic sunset runway. */
+html[data-theme='autumn'] :where(.hero-grid) { display: block !important; padding-top: 56px !important; padding-bottom: 78px !important; }
+html[data-theme='autumn'] :where(.hero-copy) { position: relative; max-width: 790px; padding: 46px !important; border: 2px dashed #b7794d !important; background: #fffaf0e8 !important; box-shadow: 18px 18px 0 #75402a35 !important; transform: rotate(-.65deg); }
+html[data-theme='autumn'] :where(.hero-copy::after) { content: 'BOARDING DOCUMENT / AUTUMN ROUTE'; position: absolute; right: 24px; top: 18px; color: #b7794d; font-family: var(--mono); font-size: .52rem; letter-spacing: .1em; }
+html[data-theme='autumn'] :where(.route-globe) { display: none !important; }
+html[data-theme='autumn'] :where(.ticket) { border-radius: 2px !important; box-shadow: 8px 10px 0 #75402a18 !important; }
+html[data-theme='autumn'] :where(.terminal-grid) { gap: 1px !important; }
+html[data-theme='autumn'] :where(.terminal-grid a:nth-child(odd)) { transform: translateY(10px); }
+html[data-theme='autumn'] :where(.featured .route) { min-height: 340px !important; }
+
+/* Winter: centered frosted control room with translucent glass cards. */
+html[data-theme='winter'] :where(.hero-grid) { display: block !important; padding-top: 72px !important; padding-bottom: 90px !important; text-align: center; }
+html[data-theme='winter'] :where(.hero-copy) { max-width: 900px; margin-inline: auto; padding: 48px !important; border: 1px solid #ffffffcc !important; border-radius: 18px !important; background: #ffffffa8 !important; box-shadow: 0 24px 80px #315b7738 !important; backdrop-filter: blur(18px); }
+html[data-theme='winter'] :where(.route-globe) { display: none !important; }
+html[data-theme='winter'] :where(.hero-search) { margin-inline: auto !important; }
+html[data-theme='winter'] :where(.quick-links) { justify-content: center !important; }
+html[data-theme='winter'] :where(.ticket) { border: 1px solid #ffffff !important; border-radius: 16px !important; background: #ffffffc9 !important; box-shadow: 0 16px 42px #315b7720 !important; backdrop-filter: blur(10px); }
+html[data-theme='winter'] :where(.ticket::before, .ticket::after) { display: none !important; }
+html[data-theme='winter'] :where(.ticket .route) { border-radius: 15px 15px 0 0 !important; }
+html[data-theme='winter'] :where(.terminal-grid) { gap: 14px !important; border: 0 !important; background: transparent !important; }
+html[data-theme='winter'] :where(.terminal-grid a) { border: 1px solid #fff !important; border-radius: 14px !important; background: #ffffffb8 !important; backdrop-filter: blur(9px); }
+html[data-theme='winter'] :where(.fids, .tower-screen) { overflow: hidden; border-radius: 14px !important; box-shadow: 0 18px 48px #315b7724 !important; }
+
+@media (max-width: 900px) {
+  html[data-theme] :where(.hero-grid) { display: block !important; padding-top: 36px !important; padding-bottom: 54px !important; }
+  html[data-theme] :where(.hero-copy) { max-width: 100% !important; padding: 30px !important; transform: none !important; clip-path: none !important; }
+  html[data-theme] :where(.route-globe) { display: none !important; }
+  html[data-theme='summer'] :where(.terminal-grid) { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+@media (max-width: 800px) {
+  .container { width: min(calc(100% - 28px), var(--max)); }
+  .section { padding-block: 58px; }
+  .section-head { display: block; }
+  .section-head p { margin-top: 14px; }
+  .grid-3 { grid-template-columns: 1fr; }
+  body { background-size: 240px 240px, 32px 32px, 32px 32px, auto; }
+}

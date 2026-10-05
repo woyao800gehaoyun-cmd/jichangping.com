@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import { ArrowRight, CheckCircle2, CircleDot, Plane, Radar, Search, ShieldCheck, Signal, Wifi } from 'lucide-astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { categories } from '../data/site';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const featured = posts.find((p) => p.data.featured) ?? posts[0];
+const latest = posts.filter((p) => p.id !== featured.id).slice(0, 6);
+const board = posts.slice(0, 6);
+const flights = [
+  { route: 'SHA → HKG', status: '稳定', gate: 'A03', delay: '32ms' },
+  { route: 'CAN → SIN', status: '复测中', gate: 'B12', delay: '47ms' },
+  { route: 'PEK → NRT', status: '稳定', gate: 'C07', delay: '58ms' },
+  { route: 'CTU → LAX', status: '观察', gate: 'D21', delay: '126ms' }
+];
+---
+<BaseLayout>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="status"><i></i> CN-HUB · 航路数据库正常运行</div>
+        <p class="eyebrow">DIGITAL TRANSIT INTELLIGENCE</p>
+        <h1 class="display">每条数字航线，<br/><em>都值得被复核。</em></h1>
+        <p class="lead">用机场、航班与中转站的语言，重新整理节点稳定性、客户端兼容、隐私边界与真实成本。</p>
+        <form class="hero-search" action="/search/"><Search size={18}/><label class="sr-only" for="hero-query">搜索评测、教程或问题</label><input id="hero-query" name="q" type="search" placeholder="输入航线、客户端或问题，例如：Clash Verge"/><button type="submit">SEARCH <ArrowRight size={16}/></button></form>
+        <div class="quick-links"><span>QUICK TRANSIT</span><a href="/articles/xiaohuojian-airport-subscription-guide/">小火箭</a><a href="/articles/v2ray-airport-subscription-guide/">V2Ray</a><a href="/articles/clashmi-airport-subscription-guide/">ClashMi</a><a href="/articles/clashverge-airport-subscription-guide/">Clash Verge</a></div>
+      </div>
+      <aside class="route-globe" aria-label="全球数字航路示意">
+        <div class="globe"><i></i><i></i><i></i><span class="hub h1">CN</span><span class="hub h2">JP</span><span class="hub h3">US</span><span class="hub h4">SG</span><Plane size={25}/></div>
+        <div class="coordinates"><span>31.2304° N</span><span>121.4737° E</span><b>ACTIVE ROUTES / {posts.length}</b></div>
+      </aside>
+    </div>
+    <div class="flight-strip"><div class="container"><span>LIVE ROUTE FEED</span>{flights.map((f) => <div><b>{f.route}</b><small>{f.gate}</small><em class:list={{ stable: f.status === '稳定' }}>{f.status}</em><strong>{f.delay}</strong></div>)}</div></div>
+  </section>
+
+  <section class="section departures">
+    <div class="container">
+      <div class="section-head"><div><p class="eyebrow">DEPARTURE BOARD / 航班信息屏</p><h2 class="display">今日重点航报</h2></div><a href="/articles/">查看全部航报 <ArrowRight size={16}/></a></div>
+      <div class="fids"><div class="fids-head"><span>FLIGHT</span><span>TERMINAL</span><span>DESTINATION / ARTICLE</span><span>ETA</span><span>STATUS</span></div>{board.map((post, i) => <a href={`/articles/${post.id}/`}><b>SR{String(101+i).padStart(3,'0')}</b><span>{post.data.category.slice(0,2).toUpperCase()}</span><h3>{post.data.title}</h3><time>{post.data.readingTime} MIN</time><em><i></i> BOARDING</em></a>)}</div>
+    </div>
+  </section>
+
+  <section class="terminals">
+    <div class="container"><div class="section-head"><div><p class="eyebrow">TERMINAL DIRECTORY</p><h2 class="display">从哪个航站出发？</h2></div><p>选择你的问题类型，进入对应内容航站。</p></div><div class="terminal-grid">{categories.map((c, i) => <a href={`/category/${c.slug}/`}><span>T{String(i+1).padStart(2,'0')}</span><CircleDot size={18}/><h3>{c.name}</h3><p>{c.description}</p><b>ENTER TERMINAL →</b></a>)}</div></div>
+  </section>
+
+  <section class="section featured-section"><div class="container"><div class="section-head"><div><p class="eyebrow">PRIORITY BOARDING</p><h2 class="display">本期优先登机</h2></div><p>从这里开始了解本站的评测框架与选择方法。</p></div><ArticleCard post={featured} featured/></div></section>
+
+  <section class="section latest"><div class="container"><div class="section-head"><div><p class="eyebrow">NEW ARRIVALS</p><h2 class="display">最近抵达的航报</h2></div><p>围绕小火箭、V2Ray、ClashMi、Clash Verge 与节点订阅持续更新。</p></div><div class="grid-3">{latest.map((post,i)=><ArticleCard post={post} index={i}/>)}</div></div></section>
+
+  <section class="control-tower"><div class="container tower-grid"><div><p class="eyebrow">CONTROL TOWER / 评测塔台</p><h2 class="display">不让营销话术<br/>替代航路事实。</h2><p>每篇内容都尽量交代测试条件、适用客户端、订阅限制、隐私风险与更新时间。</p><a class="button" href="/editorial-policy/">打开评测雷达 <Radar size={16}/></a></div><div class="tower-screen"><div><Signal/><span>ROUTE STABILITY</span><b>35%</b></div><div><Wifi/><span>REAL TASK SPEED</span><b>25%</b></div><div><ShieldCheck/><span>SAFETY & POLICY</span><b>25%</b></div><div><CheckCircle2/><span>COST & SUPPORT</span><b>15%</b></div></div></div></section>
+  <Newsletter/>
+</BaseLayout>
+<style>
+  .hero{position:relative;overflow:hidden;padding:70px 0 0;background:#06101e;border-bottom:1px solid #29445e}.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(#1a344d55 1px,transparent 1px),linear-gradient(90deg,#1a344d55 1px,transparent 1px);background-size:40px 40px;mask-image:linear-gradient(90deg,#000,transparent 70%)}.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:65px;align-items:center;padding-bottom:66px}.status{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;padding:6px 10px;border:1px solid #31546b;color:#83eaa9;background:#0a1d28;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em}.status i{width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;animation:blink 1.5s infinite}h1{margin:0;max-width:760px;font-size:clamp(3.2rem,5.7vw,5.6rem)}h1 em{color:var(--accent);font-style:normal}.lead{max-width:650px;margin:24px 0 27px;color:#9db1c3;font-size:.94rem}.hero-search{display:grid;grid-template-columns:auto 1fr auto;align-items:center;max-width:700px;border:1px solid #34536c;background:#040b15;box-shadow:0 14px 40px #0006}.hero-search>svg{margin-left:16px;color:var(--green)}.hero-search input{min-width:0;padding:16px 13px;border:0;outline:0;background:transparent;color:var(--ink);font-size:.83rem}.hero-search button{display:flex;align-items:center;gap:8px;align-self:stretch;padding:0 17px;border:0;border-left:1px solid #34536c;color:#06101c;background:var(--accent);font-family:var(--mono);font-size:.62rem;font-weight:700}.quick-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:17px;color:#71879a;font-family:var(--mono);font-size:.61rem}.quick-links span{color:#4f657a}.quick-links a{color:#9fb6c9}.quick-links a:hover{color:var(--green)}
+  .route-globe{position:relative;min-height:410px}.globe{position:relative;width:min(390px,100%);aspect-ratio:1;margin:auto;border:1px solid #31546e;border-radius:50%;background:repeating-radial-gradient(circle,transparent 0 45px,#1f3d5655 46px 47px),linear-gradient(90deg,transparent 49.7%,#25465e 50%,transparent 50.3%),linear-gradient(transparent 49.7%,#25465e 50%,transparent 50.3%);box-shadow:inset 0 0 80px #0d2d45,0 0 60px #071525}.globe::before,.globe::after{content:'';position:absolute;inset:17%;border:1px dashed #35647e;border-radius:50%;transform:rotate(25deg)}.globe::after{transform:rotate(-42deg)}.globe>i{position:absolute;z-index:2;border-top:1px dashed #4de1ff88;transform-origin:left}.globe>i:nth-child(1){left:28%;top:40%;width:48%;transform:rotate(-25deg)}.globe>i:nth-child(2){left:28%;top:40%;width:53%;transform:rotate(32deg)}.globe>i:nth-child(3){left:28%;top:40%;width:38%;transform:rotate(108deg)}.hub{position:absolute;z-index:3;display:grid;width:28px;height:20px;place-items:center;border:1px solid var(--green);color:var(--green);background:#07111e;font-family:var(--mono);font-size:.55rem}.h1{left:24%;top:37%}.h2{right:18%;top:22%}.h3{right:10%;bottom:25%}.h4{left:27%;bottom:15%}.globe>svg{position:absolute;z-index:4;left:57%;top:28%;color:var(--accent);filter:drop-shadow(0 0 7px #ffb54888);transform:rotate(65deg)}.coordinates{display:flex;justify-content:space-between;gap:10px;margin:17px auto 0;width:min(390px,100%);color:#607a90;font-family:var(--mono);font-size:.55rem}.coordinates b{color:var(--green)}
+  .flight-strip{position:relative;z-index:3;border-top:1px solid #29445e;background:#040a13}.flight-strip>.container{display:grid;grid-template-columns:140px repeat(4,1fr);align-items:stretch}.flight-strip>.container>span{display:flex;align-items:center;color:var(--accent);font-family:var(--mono);font-size:.58rem;letter-spacing:.1em}.flight-strip div div{display:grid;grid-template-columns:1fr auto;gap:1px 12px;padding:12px 16px;border-left:1px solid #1f354b;font-family:var(--mono)}.flight-strip b{font-size:.68rem}.flight-strip small{color:#607a91;font-size:.56rem}.flight-strip em{color:var(--accent);font-size:.56rem;font-style:normal}.flight-strip em.stable{color:#7be9a3}.flight-strip strong{color:#8096aa;font-size:.58rem}
+  .departures{background:#070f1c}.section-head>a{display:inline-flex;align-items:center;gap:7px;color:var(--green);font-family:var(--mono);font-size:.67rem}.fids{border:1px solid #29445c;background:#02070e;box-shadow:inset 0 0 30px #0b1724}.fids-head,.fids>a{display:grid;grid-template-columns:100px 100px 1fr 80px 120px;align-items:center;gap:16px;padding:0 20px}.fids-head{height:37px;border-bottom:1px solid #263b50;color:#556d82;font-family:var(--mono);font-size:.55rem}.fids>a{min-height:62px;border-bottom:1px solid #14283a;transition:.18s}.fids>a:last-child{border:0}.fids>a:hover{background:#0c1a29}.fids b{color:var(--accent);font-family:var(--mono);font-size:.77rem}.fids>a>span{color:#6d879d;font-family:var(--mono);font-size:.62rem}.fids h3{margin:0;font-size:.84rem;font-weight:500}.fids time{color:#7d93a7;font-family:var(--mono);font-size:.62rem}.fids em{color:#80eca6;font-family:var(--mono);font-size:.57rem;font-style:normal}.fids em i{display:inline-block;width:5px;height:5px;margin-right:7px;border-radius:50%;background:currentColor;box-shadow:0 0 7px currentColor}
+  .terminals{padding:82px 0;background:#091322;border-block:1px solid #263f56}.terminal-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:#284158;border:1px solid #284158}.terminal-grid a{position:relative;min-height:210px;padding:22px;background:#081321;transition:.2s}.terminal-grid a:hover{z-index:2;background:#0d2032;box-shadow:inset 0 -3px var(--green)}.terminal-grid span{color:var(--accent);font-family:var(--mono);font-size:.62rem}.terminal-grid svg{position:absolute;right:20px;top:21px;color:#405b72}.terminal-grid h3{margin:52px 0 9px;font-size:1rem}.terminal-grid p{margin:0;color:var(--muted);font-size:.73rem}.terminal-grid b{position:absolute;left:22px;bottom:20px;color:#577187;font-family:var(--mono);font-size:.55rem}
+  .featured-section{background:#050b15}.latest{background:#081220}.latest .grid-3{row-gap:22px}.control-tower{padding:84px 0;background:#050a13;border-top:1px solid #253e54}.tower-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}.tower-grid h2{margin:0;font-size:clamp(2.3rem,4vw,3.8rem)}.tower-grid>div>p:not(.eyebrow){max-width:570px;color:var(--muted);font-size:.88rem}.tower-grid .button{margin-top:16px}.tower-screen{border:1px solid #2b465e;background:#02070e}.tower-screen>div{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:14px;padding:20px;border-bottom:1px solid #1a2f43}.tower-screen>div:last-child{border:0}.tower-screen svg{color:var(--green)}.tower-screen span{font-family:var(--mono);font-size:.67rem;letter-spacing:.08em}.tower-screen b{color:var(--accent);font-family:var(--mono)}
+  @media(max-width:950px){.hero-grid{grid-template-columns:1fr}.route-globe{min-height:auto}.globe{max-width:330px}.flight-strip>.container{grid-template-columns:repeat(2,1fr)}.flight-strip>.container>span{grid-column:1/-1;padding:10px 0}.terminal-grid{grid-template-columns:repeat(2,1fr)}.tower-grid{grid-template-columns:1fr;gap:40px}}
+  @media(max-width:650px){.hero{padding-top:42px}h1{font-size:2.8rem}.route-globe{display:none}.hero-search{grid-template-columns:auto 1fr}.hero-search button{width:48px;font-size:0}.flight-strip>.container{grid-template-columns:1fr}.flight-strip div div:nth-of-type(n+3){display:none}.fids-head{display:none}.fids>a{grid-template-columns:70px 1fr 85px;padding:14px}.fids>a>span,.fids time{display:none}.fids h3{font-size:.78rem}.terminal-grid{grid-template-columns:1fr}.terminal-grid a{min-height:170px}}
+</style>
