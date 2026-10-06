@@ -12,6 +12,7 @@ interface Props {
   type?: 'website' | 'article';
   publishedAt?: Date;
   updatedAt?: Date;
+  noindex?: boolean;
 }
 
 const {
@@ -21,7 +22,8 @@ const {
   canonical = Astro.url.pathname,
   type = 'website',
   publishedAt,
-  updatedAt
+  updatedAt,
+  noindex = false
 } = Astro.props;
 const canonicalURL = new URL(canonical, Astro.site ?? SITE.url);
 const imageURL = new URL(image, Astro.site ?? SITE.url);
@@ -53,6 +55,7 @@ const schema = {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} RSS`} href="/rss.xml" />

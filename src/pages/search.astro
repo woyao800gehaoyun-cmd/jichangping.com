@@ -5,7 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).map((p) => ({ title:p.data.title, description:p.data.description, category:p.data.category, tags:p.data.tags, url:`/articles/${p.id}/` }));
 ---
-<BaseLayout title="站内搜索｜燕子机场榜" description="搜索燕子机场榜的评测、指南、教程与行业观察。">
+<BaseLayout title="站内搜索｜燕子机场榜" description="搜索燕子机场榜的评测、指南、教程与行业观察。" noindex>
   <PageHeader eyebrow="SEARCH" title="站内搜索" description="输入主题、问题或关键词。搜索在你的浏览器中完成，不记录查询内容。" />
   <section class="container search-area"><div class="search-box"><Search size={22}/><label class="sr-only" for="q">搜索文章</label><input id="q" type="search" placeholder="例如：公共 Wi-Fi、DNS、续费……" autocomplete="off" /></div><p id="status">共收录 {posts.length} 篇文章</p><div id="results"></div></section>
   <script define:vars={{ posts }}>

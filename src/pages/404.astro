@@ -2,7 +2,7 @@
 import { ArrowLeft } from 'lucide-astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="页面未找到｜燕子机场榜" description="你访问的页面不存在或已经移动。">
+<BaseLayout title="页面未找到｜燕子机场榜" description="你访问的页面不存在或已经移动。" noindex>
   <section class="not-found"><div class="container"><span>404</span><p class="eyebrow">ROUTE NOT FOUND</p><h1 class="display">这条路径暂时<br />没有内容。</h1><p>页面可能已经移动，或者地址输入有误。可以返回首页，从栏目或搜索重新出发。</p><a class="button" href="/"><ArrowLeft size={17}/> 返回首页</a></div></section>
 </BaseLayout>
 <style>.not-found{min-height:70vh;padding:70px 0;background:var(--paper-2)}.not-found span{float:right;color:var(--accent);font-family:var(--serif);font-size:8rem;line-height:1}.not-found h1{margin:0;font-size:clamp(3.5rem,8vw,7rem)}.not-found p:not(.eyebrow){max-width:550px;color:var(--muted)}.not-found .button{margin-top:20px}@media(max-width:600px){.not-found span{float:none;font-size:5rem}}
