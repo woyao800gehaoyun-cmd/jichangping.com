@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import { ArrowRight, CheckCircle2, ExternalLink, Gauge, Gamepad2, Sparkles, Tv2 } from 'lucide-astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const postById = new Map(posts.map((post) => [post.id, post]));
+const groups = [
+  {
+    code: 'R01',
+    title: '综合选择航线',
+    description: '先看场景榜单和新手选择框架，再决定需要哪些线路与套餐。',
+    ids: ['guangnianti-airport-deep-review', '2026-airport-recommendation-by-scenario', 'first-time-buyers-guide', 'airport-directory-official-backup-entry']
+  },
+  {
+    code: 'R02',
+    title: '速度与线路航线',
+    description: '比较晚高峰、低延迟、IPLC、中转、原生 IP 和住宅 IP。',
+    ids: ['speed-test-method', 'iplc-transit-bgp-direct-airport-guide', 'native-residential-ip-airport-guide']
+  },
+  {
+    code: 'R03',
+    title: '场景任务航线',
+    description: '围绕流媒体、AI、游戏、外贸直播、远程办公和多设备使用选择。',
+    ids: ['streaming-vs-work', 'airport-device-multiplier-audit-guide', 'regional-airport-node-guide']
+  },
+  {
+    code: 'R04',
+    title: '客户端与订阅航线',
+    description: '确认平台客户端、订阅格式、导入流程和套餐真实成本。',
+    ids: ['airport-client-platform-matrix', 'airport-subscription-link-node-import', 'subscription-renewal-cost']
+  }
+].map((group) => ({ ...group, posts: group.ids.map((id) => postById.get(id)).filter(Boolean) }));
+
+const standards = [
+  { icon: Gauge, label: '稳定与高峰', value: '35%', text: '连续可用、晚高峰波动、故障恢复和备用线路。' },
+  { icon: Tv2, label: '真实任务', value: '25%', text: '网页、视频、会议、游戏和上传，而不是只看测速峰值。' },
+  { icon: CheckCircle2, label: '安全与规则', value: '25%', text: '订阅安全、日志说明、设备限制、退款和组织政策。' },
+  { icon: Sparkles, label: '成本与支持', value: '15%', text: '倍率后的有效流量、续费价格、公告和工单响应。' }
+];
+---
+<BaseLayout title="机场推荐｜2026 分场景机场排行与选择指南" description="按稳定、高速、低延迟、流媒体、AI、游戏、外贸办公、客户端和预算整理机场推荐文章与选择方法。">
+  <PageHeader eyebrow="ROUTE RANKING" title="机场推荐" description="这里不发布无法长期验证的永久第一名，而是按真实使用场景整理推荐航线、测试方法和选择标准。" count={groups.length} />
+
+  <section class="container recommendation-intro">
+    <div class="intro-copy"><p class="eyebrow">REVIEW STANDARD / 推荐标准</p><h2 class="display">先匹配任务，<br/>再比较机场。</h2><p>同一个服务不可能在所有网络、地区和任务中都排名第一。本站把推荐拆成可以复测的指标，并明确内容更新时间。</p><a class="button" href="/articles/2026-airport-recommendation-by-scenario/">打开 2026 场景榜单 <ArrowRight size={16}/></a></div>
+    <div class="standard-grid">{standards.map(({ icon: Icon, label, value, text }) => <article><Icon size={20}/><b>{value}</b><h3>{label}</h3><p>{text}</p></article>)}</div>
+  </section>
+
+  <section class="container provider-feature">
+    <div class="provider-code"><span>FEATURED ROUTE / GNT</span><b>资料复核中</b></div>
+    <div class="provider-copy"><p class="eyebrow">SPECIFIC SERVICE / 具体服务</p><h2 class="display">光年梯机场</h2><p>公开资料显示其以多地区订阅节点和相对入门的价格带为主要卖点；但线路、套餐、设备限制和流媒体表现仍需以当前购买页与本地实测为准。</p><div class="provider-actions"><a class="button" href="/articles/guangnianti-airport-deep-review/">阅读深度测评 <ArrowRight size={16}/></a><a class="external-button" href="https://Rumors.gntaff.com/#/?code=Mclks3w5" target="_blank" rel="sponsored nofollow noreferrer">访问外部入口 <ExternalLink size={15}/></a></div><small>推广披露：外部入口为推广链接；通过链接购买时，本站可能获得佣金。推荐不等于购买保证。</small></div>
+    <div class="provider-board"><div><span>REVIEW</span><b>公开资料 + 风险复核</b></div><div><span>TEST</span><b>建议先月付自测</b></div><div><span>STATUS</span><b>非永久排名</b></div></div>
+  </section>
+
+  {groups.map((group, groupIndex) => <section class:list={['section', 'recommendation-group', { alternate: groupIndex % 2 === 1 }]}>
+    <div class="container"><div class="section-head"><div><p class="eyebrow">{group.code} / RECOMMENDED ROUTES</p><h2 class="display">{group.title}</h2></div><p>{group.description}</p></div><div class="grid-3">{group.posts.map((post, index) => post && <ArticleCard post={post} index={groupIndex * 3 + index}/>)}</div></div>
+  </section>)}
+
+  <section class="container recommendation-note"><Gamepad2 size={24}/><div><h2>推荐不是购买保证</h2><p>线路、节点、价格和平台规则会变化。首次使用任何服务时，优先短周期验证，保存订单与条款，并遵守所在地法律及平台规则。</p></div></section>
+</BaseLayout>
+<style>
+  .recommendation-intro{display:grid;grid-template-columns:.8fr 1.2fr;gap:55px;align-items:center;padding-top:70px;padding-bottom:76px}.intro-copy h2{margin:0;font-size:clamp(2.4rem,4vw,4rem)}.intro-copy>p:not(.eyebrow){color:var(--muted);font-size:.92rem}.intro-copy .button{margin-top:14px}.standard-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.standard-grid article{position:relative;min-height:185px;padding:24px;border:1px solid var(--line);background:color-mix(in srgb,var(--season-surface) 92%,transparent);box-shadow:0 12px 30px color-mix(in srgb,var(--season-route) 9%,transparent)}.standard-grid svg{color:var(--green)}.standard-grid b{position:absolute;right:22px;top:20px;color:var(--accent);font-family:var(--mono);font-size:1.25rem}.standard-grid h3{margin:34px 0 8px;font-size:1rem}.standard-grid p{margin:0;color:var(--muted);font-size:.77rem;line-height:1.75}.provider-feature{display:grid;grid-template-columns:150px minmax(0,1fr) 250px;gap:32px;align-items:stretch;margin-bottom:76px;padding:0;border:1px solid var(--line-bright);background:var(--season-surface);box-shadow:0 20px 45px color-mix(in srgb,var(--season-route) 12%,transparent)}.provider-code{display:flex;flex-direction:column;justify-content:space-between;padding:25px;border-right:1px dashed var(--line-bright);background:var(--season-surface-2)}.provider-code span,.provider-board span{color:var(--green);font-family:var(--mono);font-size:.57rem;letter-spacing:.08em}.provider-code b{color:var(--accent);font-family:var(--mono);font-size:.7rem}.provider-copy{padding:34px 0}.provider-copy h2{margin:0;font-size:clamp(2.2rem,4vw,3.8rem)}.provider-copy>p:not(.eyebrow){max-width:700px;color:var(--muted);font-size:.88rem;line-height:1.85}.provider-copy small{display:block;margin-top:16px;color:var(--muted);font-size:.67rem;line-height:1.7}.provider-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.external-button{display:inline-flex;min-height:44px;padding:0 17px;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line-bright);color:var(--season-text);font-family:var(--mono);font-size:.7rem;font-weight:700}.external-button:hover{border-color:var(--accent);color:var(--accent)}.provider-board{display:grid;border-left:1px solid var(--line)}.provider-board div{display:flex;flex-direction:column;justify-content:center;gap:8px;padding:18px 24px;border-bottom:1px solid var(--line)}.provider-board div:last-child{border-bottom:0}.provider-board b{font-size:.78rem}.recommendation-group{border-top:1px solid var(--line);background:var(--season-surface)}.recommendation-group.alternate{background:var(--season-base)}.recommendation-note{display:flex;gap:20px;align-items:flex-start;margin-top:70px;margin-bottom:90px;padding:26px;border:1px solid var(--line-bright);border-left:5px solid var(--accent);background:var(--season-surface-2)}.recommendation-note svg{flex:0 0 auto;color:var(--accent)}.recommendation-note h2{margin:0 0 6px;font-size:1rem}.recommendation-note p{margin:0;color:var(--muted);font-size:.82rem}
+  @media(max-width:900px){.provider-feature{grid-template-columns:110px 1fr}.provider-board{grid-column:1/-1;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:0}.provider-board div{border-right:1px solid var(--line);border-bottom:0}.provider-board div:last-child{border-right:0}}@media(max-width:850px){.recommendation-intro{grid-template-columns:1fr}.standard-grid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.provider-feature{display:block}.provider-code{min-height:90px;border-right:0;border-bottom:1px dashed var(--line-bright)}.provider-copy{padding:25px}.provider-board{grid-template-columns:1fr}.provider-board div{border-right:0;border-bottom:1px solid var(--line)}}@media(max-width:560px){.standard-grid{grid-template-columns:1fr}.standard-grid article{min-height:150px}.provider-actions>a{width:100%}}
+</style>

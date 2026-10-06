@@ -6,8 +6,8 @@ import ArticleCard from '../../components/ArticleCard.astro';
 import { categories } from '../../data/site';
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a,b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 ---
-<BaseLayout title="文章库｜燕子机场榜" description="浏览燕子机场榜全部机场评测、隐私指南、对比文章和实用教程。">
-  <PageHeader eyebrow="ALL STORIES" title="文章库" description="从基础概念到进阶排错，从购买决策到隐私审查。所有文章按统一编辑规范撰写，并标明发布时间与阅读成本。" count={posts.length} />
+<BaseLayout title="机场文章库｜机场推荐、订阅节点、线路客户端与故障排查" description="浏览机场推荐排行、机场测评、订阅节点、IPLC 专线、地区节点、客户端、套餐价格和故障排查文章。">
+  <PageHeader eyebrow="ALL STORIES" title="机场文章库" description="从机场推荐与选择，到订阅链接、线路协议、地区节点、客户端、价格套餐和连接排错，按搜索意图系统整理。" count={posts.length} />
   <div class="container filters"><a class="active" href="/articles/">全部</a>{categories.map((c) => <a href={`/category/${c.slug}/`}>{c.name}</a>)}</div>
   <section class="container article-list"><div class="grid-3">{posts.map((post, i) => <ArticleCard post={post} index={i} />)}</div></section>
 </BaseLayout>

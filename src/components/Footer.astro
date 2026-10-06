@@ -7,8 +7,8 @@ import { SITE, categories } from '../data/site';
   <div class="container footer-grid">
     <div class="intro"><a class="footer-brand" href="/"><Plane size={22}/>{SITE.name}</a><p>{SITE.description}</p><p class="fine">本站仅提供信息与评测参考。请遵守所在地法律法规与组织安全政策。</p></div>
     <div><h2>TERMINALS / 内容</h2>{categories.slice(0, 4).map((c) => <a href={`/category/${c.slug}/`}>{c.name}</a>)}</div>
-    <div><h2>TRANSIT / 航站</h2><a href="/topics/">专题航线</a><a href="/brands/">品牌航站</a><a href="/about/">关于我们</a><a href="/editorial-policy/">评测雷达</a><a href="/disclosure/">推广披露</a></div>
-    <div><h2>SERVICE / 服务</h2><a href="/privacy/">隐私说明</a><a href="/rss.xml">RSS 航报</a><a href="/sitemap-index.xml">站点地图</a><a href="mailto:editor@example.com">联系塔台</a></div>
+    <div><h2>TRANSIT / 航站</h2><a href="/recommendations/">机场推荐</a><a href="/faq/">机场问题库</a><a href="/alerts/">跑路机场预警</a><a href="/about/">关于本站</a><a href="/topics/">专题航线</a></div>
+    <div><h2>SERVICE / 服务</h2><a href="/privacy/">隐私说明</a><a href="/rss.xml">RSS 航报</a><a href="/sitemap-index.xml">站点地图</a><a href="https://t.me/rumors6688" target="_blank" rel="noreferrer">TG：@rumors6688</a></div>
   </div>
   <div class="container bottom"><span>© {new Date().getFullYear()} {SITE.name}</span><span>ROUTES CHANGE · DATA STAYS REVIEWABLE</span></div>
 </footer>

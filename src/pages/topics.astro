@@ -5,15 +5,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 const posts = await getCollection('posts', ({ data }) => !data.draft);
 const topics = [
-  { name: '新手决策课', desc: '从需求梳理到订阅成本，建立不被营销带走的选择框架。', tags: ['选择指南','订阅避坑','免费方案'], tone: 'coral' },
-  { name: '隐私基本功', desc: '理解日志、DNS、权限与审计，让“安全”变成可以检查的事实。', tags: ['无日志','DNS','隐私体检'], tone: 'green' },
-  { name: '性能实验室', desc: '学习测速、理解延迟，并为不同任务建立正确的测试方法。', tags: ['速度测试','延迟','性能对比'], tone: 'gold' },
-  { name: '连接排错册', desc: '从断线保护到多设备差异，按层次解决连接中的真实问题。', tags: ['故障排查','断线保护','跨设备'], tone: 'blue' }
+  { name: '2026 机场推荐', desc: '按稳定、高速、游戏、流媒体、AI、外贸和办公场景建立可复核榜单。', tags: ['机场推荐','机场排行','机场测评'], tone: 'coral', href: '/articles/2026-airport-recommendation-by-scenario/' },
+  { name: '机场选择与避坑', desc: '从协议、线路、倍率、设备数到机场与 VPN、VPS 的区别。', tags: ['机场怎么选','机场避坑','小白机场推荐'], tone: 'green', href: '/articles/first-time-buyers-guide/' },
+  { name: '订阅与客户端', desc: '理解订阅链接、节点导入，以及 Windows、Mac、Android、iOS 客户端。', tags: ['机场订阅','Windows机场','iOS机场'], tone: 'gold', href: '/articles/airport-subscription-link-node-import/' },
+  { name: '线路与 IP', desc: '对比 IPLC、专线、中转、BGP、直连、原生 IP 和住宅 IP。', tags: ['IPLC机场','原生IP机场','中转机场'], tone: 'blue', href: '/articles/iplc-transit-bgp-direct-airport-guide/' },
+  { name: '全球地区节点', desc: '香港、日本、新加坡、欧美与东南亚节点的任务匹配和测试方法。', tags: ['香港机场','日本机场','美国机场'], tone: 'coral', href: '/articles/regional-airport-node-guide/' },
+  { name: '价格套餐与优惠', desc: '计算月付、年付、流量包、倍率、折扣、优惠码与试用的真实成本。', tags: ['机场套餐','机场价格','机场优惠'], tone: 'green', href: '/articles/subscription-renewal-cost/' },
+  { name: '连接故障排查', desc: '处理节点不显示、速度慢、延迟高、超时、失效和订阅导入失败。', tags: ['机场节点少','机场无法连接','Clash导入订阅失败'], tone: 'gold', href: '/articles/troubleshooting-connection/' },
+  { name: '隐私、审计与设备', desc: '理解多设备限制、节点倍率、日志审计和无审计宣传的真实边界。', tags: ['节点倍率','多设备机场','机场审计'], tone: 'blue', href: '/articles/airport-device-multiplier-audit-guide/' }
 ];
 ---
 <BaseLayout title="专题导航｜燕子机场榜" description="围绕选择、隐私、性能与排错组织的系列内容，按学习路径系统阅读。">
   <PageHeader eyebrow="COLLECTIONS" title="专题导航" description="专题不是标签堆砌，而是一条完整的阅读路径。每个专题从基础问题开始，逐步进入判断方法与实际操作。" count={topics.length} />
-  <section class="container topic-grid">{topics.map((topic, i) => { const count = posts.filter((p) => p.data.tags.some((t) => topic.tags.some((tag) => t.includes(tag) || tag.includes(t)))).length; return <article class={`tone-${topic.tone}`}><div class="visual"><span>{String(i+1).padStart(2,'0')}</span><i></i><i></i></div><div class="body"><p>专题 · {count || 3} 篇文章</p><h2 class="display">{topic.name}</h2><p>{topic.desc}</p><a href="/articles/">进入专题 <ArrowUpRight size={18} /></a></div></article>})}</section>
+  <section class="container topic-grid">{topics.map((topic, i) => { const count = posts.filter((p) => p.data.tags.some((t) => topic.tags.some((tag) => t.includes(tag) || tag.includes(t)))).length; return <article class={`tone-${topic.tone}`}><div class="visual"><span>{String(i+1).padStart(2,'0')}</span><i></i><i></i></div><div class="body"><p>专题 · {count || 1} 篇相关文章</p><h2 class="display">{topic.name}</h2><p>{topic.desc}</p><a href={topic.href}>进入专题 <ArrowUpRight size={18} /></a></div></article>})}</section>
 </BaseLayout>
 <style>
   .topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:60px;padding-bottom:96px}.topic-grid article{display:grid;grid-template-columns:170px 1fr;min-height:270px;border:1px solid var(--line);background:#081321}.visual{position:relative;overflow:hidden;padding:18px;color:var(--green);background-color:#0b192a;background-image:linear-gradient(#27435b55 1px,transparent 1px),linear-gradient(90deg,#27435b55 1px,transparent 1px);background-size:25px 25px}.visual::after{content:'TRANSIT ROUTE';position:absolute;left:18px;bottom:18px;font-family:var(--mono);font-size:.52rem;letter-spacing:.1em}.visual span{font-family:var(--mono);font-size:2.2rem;font-weight:700}.visual i{position:absolute;width:170px;height:170px;border:1px dashed currentColor;border-radius:50%;opacity:.45}.visual i:nth-child(2){left:20px;bottom:-70px}.visual i:nth-child(3){left:70px;bottom:-35px}.tone-coral .visual,.tone-green .visual,.tone-gold .visual,.tone-blue .visual{color:var(--green);background-color:#0b192a}.body{padding:30px}.body>p:first-child{color:var(--accent);font-family:var(--mono);font-size:.62rem;font-weight:600}.body h2{margin:20px 0 12px;font-size:2rem}.body>p:not(:first-child){color:var(--muted);font-size:.82rem}.body a{display:inline-flex;align-items:center;gap:8px;margin-top:18px;color:var(--green);font-family:var(--mono);font-size:.65rem;font-weight:600}

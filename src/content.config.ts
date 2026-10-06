@@ -13,6 +13,7 @@ const posts = defineCollection({
     author: z.string().default('燕子测评组'),
     readingTime: z.number(),
     featured: z.boolean().default(false),
+    affiliate: z.boolean().default(false),
     coverTone: z.enum(['coral', 'green', 'ink', 'gold', 'blue']).default('ink'),
     draft: z.boolean().default(false)
   })

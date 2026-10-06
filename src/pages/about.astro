@@ -1,9 +1,41 @@
 ---
 import InfoLayout from '../layouts/InfoLayout.astro';
 ---
-<InfoLayout title="关于燕子机场榜" description="一个关注机场评测、网络工具、数字隐私与日常连接体验的独立中文内容站。">
-  <h2>我们为什么做这件事</h2><p>机场和网络工具的宣传往往充满最高速度、节点数量和折扣倒计时，却很少解释限制、默认设置与真实使用成本。燕子机场榜希望补上这些信息，让读者先理解问题，再决定是否需要某项工具。</p>
-  <h2>我们写什么</h2><p>内容覆盖入门指南、工具评测、横向对比、实用教程与行业观察。我们关注普通人能够验证的体验：安装是否顺利、默认设置是否合理、网络切换能否恢复、隐私条款是否清楚，以及价格在促销期结束后会如何变化。</p>
-  <h2>我们不做什么</h2><p>本站不提供具体代理服务，不发布规避所在地法律法规的操作指导，也不会把安全、匿名或访问能力包装成绝对承诺。任何工具都有边界，读者应根据自身所在地规则和组织政策使用。</p>
-  <h2>联系我们</h2><p>如需指出事实错误、建议选题或提出更正，请发送邮件至 <a href="mailto:editor@example.com">editor@example.com</a>。正式上线前请将该示例邮箱替换为真实编辑部地址。</p>
+<InfoLayout title="关于本站" description="燕子机场榜是一个整理机场推荐、订阅客户端、线路节点、常见问题和风险预警的独立中文内容站。" eyebrow="ABOUT THE STATION" updated="2026 年 10 月 5 日">
+  <div class="about-stats"><div><b>30+</b><span>已发布航报</span></div><div><b>24</b><span>问题库条目</span></div><div><b>4</b><span>核心内容板块</span></div><div><b>0</b><span>付费排名席位</span></div></div>
+
+  <h2>我们为什么做这个站</h2>
+  <p>机场和网络工具的宣传经常突出最高速度、节点数量和折扣倒计时，却很少解释高峰期表现、节点倍率、设备限制、订阅安全、退款条件与长期成本。燕子机场榜希望把这些信息重新整理成可以检查的内容。</p>
+  <blockquote>我们的目标不是替读者做决定，而是让决定过程更透明、更容易复核。</blockquote>
+
+  <h2>本站的四个核心板块</h2>
+  <div class="about-cards">
+    <a href="/recommendations/"><span>01 / RANK</span><h3>机场推荐</h3><p>按稳定、高速、流媒体、AI、游戏、办公和预算等场景组织选择指南。</p></a>
+    <a href="/faq/"><span>02 / FAQ</span><h3>机场问题库</h3><p>通过关键词搜索和分类筛选，快速找到订阅、节点、客户端和排错答案。</p></a>
+    <a href="/alerts/"><span>03 / ALERT</span><h3>跑路机场预警</h3><p>使用分级证据处理风险线索，不把单次故障或群聊传言直接定性。</p></a>
+    <a href="/articles/"><span>04 / REPORT</span><h3>深度航报</h3><p>围绕线路、协议、价格、隐私与真实任务撰写可长期更新的专题文章。</p></a>
+  </div>
+
+  <h2>我们的编辑方法</h2>
+  <ol>
+    <li><strong>先写测试条件：</strong>区分城市、运营商、设备、时段、协议和目标任务。</li>
+    <li><strong>把事实与判断分开：</strong>公开条款、实测结果和编辑观点使用不同表述。</li>
+    <li><strong>不把一次测速当结论：</strong>更重视中位数、最差时段、故障恢复和持续可用。</li>
+    <li><strong>标注更新时间：</strong>线路、价格、平台规则变化后，旧结论需要复查。</li>
+    <li><strong>保留更正空间：</strong>新证据出现时，更新文章或降低、撤销预警等级。</li>
+  </ol>
+
+  <h2>推荐与预警的边界</h2>
+  <p>“机场推荐”不等于购买保证，也不意味着某个服务永久排名第一。“跑路预警”必须基于多个来源和持续异常；官网短时维护、单个节点故障或客服回复较慢，都不足以直接点名定性。</p>
+  <p>本站不出售机场服务，也不设置付费排名席位。部分具体服务评测可能包含明确标识的联盟或推广链接；相关页面会在正文和侧栏披露商业关系，并使用 <code>rel="sponsored"</code> 标记。</p>
+
+  <h2>我们不提供什么</h2>
+  <p>本站不提供代理节点或订阅，不承诺匿名、安全、解锁或永久可用，也不发布规避所在地法律法规、组织安全策略或平台规则的操作指导。企业、学校和敏感业务应优先使用正式授权的安全方案。</p>
+
+  <h2 id="corrections">事实更正与选题建议</h2>
+  <p>如果你发现文章日期、客户端状态、线路定义或公开条款存在错误，可以通过 Telegram 联系 <a href="https://t.me/rumors6688" target="_blank" rel="noreferrer">@rumors6688</a>，或在项目的 <a href="https://github.com/woyao800gehaoyun-cmd/jichangping.com/issues" rel="noreferrer">GitHub Issues</a> 中提交可公开核验的来源、页面截图和发生日期。请勿提交账号密码、完整订阅链接、付款验证码或包含个人信息的日志。</p>
 </InfoLayout>
+<style>
+  .about-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-bottom:50px;border:1px solid var(--line);background:var(--line)}.about-stats div{display:grid;min-height:105px;place-items:center;background:var(--season-surface)}.about-stats b{align-self:end;color:var(--accent);font-family:var(--mono);font-size:1.5rem}.about-stats span{align-self:start;color:var(--muted);font-size:.68rem}.about-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0 42px}.about-cards a{padding:22px;border:1px solid var(--line);background:var(--season-surface);text-decoration:none!important;transition:.2s}.about-cards a:hover{border-color:var(--green);transform:translateY(-2px)}.about-cards span{color:var(--accent);font-family:var(--mono);font-size:.6rem}.about-cards h3{margin:28px 0 7px!important}.about-cards p{margin:0!important;font-size:.78rem!important}.prose strong{color:var(--season-text)}
+  @media(max-width:620px){.about-stats,.about-cards{grid-template-columns:1fr 1fr}}@media(max-width:420px){.about-stats,.about-cards{grid-template-columns:1fr}}
+</style>

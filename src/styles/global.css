@@ -45,7 +45,7 @@ html[data-theme='spring'] {
   --season-line: #c7ded0;
   --season-line-bright: #8fbaa3;
   --season-text: #17352a;
-  --season-muted: #647c71;
+  --season-muted: #405f52;
   --season-primary: #df6f98;
   --season-secondary: #278969;
   --season-glow: #ff9fbd2e;
@@ -61,7 +61,7 @@ html[data-theme='summer'] {
   --season-line: #b9dde5;
   --season-line-bright: #77bac9;
   --season-text: #103642;
-  --season-muted: #5d7f87;
+  --season-muted: #3f6670;
   --season-primary: #e2aa25;
   --season-secondary: #078fa8;
   --season-glow: #41cce82b;
@@ -77,7 +77,7 @@ html[data-theme='autumn'] {
   --season-line: #e3ccb0;
   --season-line-bright: #c59b72;
   --season-text: #49301f;
-  --season-muted: #826b59;
+  --season-muted: #6f503a;
   --season-primary: #cf6b28;
   --season-secondary: #9b721d;
   --season-glow: #e68a3b2b;
@@ -93,7 +93,7 @@ html[data-theme='winter'] {
   --season-line: #c5d8e7;
   --season-line-bright: #8fb3ca;
   --season-text: #20394d;
-  --season-muted: #6a8091;
+  --season-muted: #4f697c;
   --season-primary: #86c9e8;
   --season-secondary: #367da4;
   --season-glow: #86c9e82d;

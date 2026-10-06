@@ -1,0 +1,56 @@
+---
+import { ArrowUpRight, HelpCircle, Search } from 'lucide-astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { faqCategories, faqItems } from '../data/faq';
+---
+<BaseLayout title="机场问题库｜订阅、节点、客户端与故障排查 FAQ" description="可搜索的机场问题库，覆盖机场选择、订阅客户端、线路节点、故障排查、套餐价格和跑路风险等常见问题。">
+  <PageHeader eyebrow="QUESTION DATABASE" title="机场问题库" description="先输入问题关键词，或按分类查找。每个答案尽量给出判断顺序，并链接到对应的完整文章。" count={faqItems.length} />
+
+  <section class="container faq-shell">
+    <div class="faq-tools">
+      <label class="faq-search"><Search size={19}/><span class="sr-only">搜索问题库</span><input id="faq-query" type="search" placeholder="搜索问题，例如：订阅失败、IPLC、节点倍率" autocomplete="off"/></label>
+      <div class="faq-categories" aria-label="问题分类">{faqCategories.map((category, index) => <button type="button" class:list={{ active: index === 0 }} data-category={category}>{category}</button>)}</div>
+      <p id="faq-count">显示 {faqItems.length} 个问题</p>
+    </div>
+
+    <div class="faq-list" id="faq-list">
+      {faqItems.map((item, index) => <details class="faq-item" data-category={item.category} data-search={`${item.question} ${item.answer} ${item.keywords.join(' ')}`}>
+        <summary><span>{String(index + 1).padStart(2, '0')}</span><div><small>{item.category}</small><h2>{item.question}</h2></div><i aria-hidden="true"></i></summary>
+        <div class="faq-answer"><p>{item.answer}</p>{item.article && <a href={item.article}>查看完整指南 <ArrowUpRight size={15}/></a>}</div>
+      </details>)}
+    </div>
+    <div id="faq-empty" class="faq-empty" hidden><HelpCircle size={28}/><h2>暂时没有匹配的问题</h2><p>尝试缩短关键词，例如把“Clash 订阅更新失败”改成“订阅失败”。</p></div>
+  </section>
+</BaseLayout>
+<script>
+  const input = document.querySelector<HTMLInputElement>('#faq-query');
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-category]')];
+  const items = [...document.querySelectorAll<HTMLDetailsElement>('.faq-item')];
+  const count = document.querySelector<HTMLElement>('#faq-count');
+  const empty = document.querySelector<HTMLElement>('#faq-empty');
+  let category = '全部';
+  const normalize = (value: string) => value.toLowerCase().replace(/\s+/g, '');
+  const filter = () => {
+    const query = normalize(input?.value ?? '');
+    let visible = 0;
+    items.forEach((item) => {
+      const categoryMatch = category === '全部' || item.dataset.category === category;
+      const searchMatch = !query || normalize(item.dataset.search ?? '').includes(query);
+      item.hidden = !(categoryMatch && searchMatch);
+      if (!item.hidden) visible += 1;
+    });
+    if (count) count.textContent = `显示 ${visible} 个问题`;
+    if (empty) empty.hidden = visible !== 0;
+  };
+  buttons.forEach((button) => button.addEventListener('click', () => {
+    category = button.dataset.category ?? '全部';
+    buttons.forEach((item) => item.classList.toggle('active', item === button));
+    filter();
+  }));
+  input?.addEventListener('input', filter);
+</script>
+<style>
+  .faq-shell{padding-top:60px;padding-bottom:96px}.faq-tools{position:sticky;top:98px;z-index:8;margin-bottom:28px;padding:18px;border:1px solid var(--line);background:color-mix(in srgb,var(--season-surface) 94%,transparent);box-shadow:0 14px 32px color-mix(in srgb,var(--season-route) 10%,transparent);backdrop-filter:blur(14px)}.faq-search{display:grid;grid-template-columns:auto 1fr;align-items:center;border:1px solid var(--line-bright);background:var(--season-surface)}.faq-search svg{margin-left:16px;color:var(--green)}.faq-search input{min-width:0;padding:15px;border:0;outline:0;color:var(--ink);background:transparent;font-size:.92rem}.faq-categories{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.faq-categories button{padding:8px 13px;border:1px solid var(--line);color:var(--muted);background:var(--season-base);font-family:var(--mono);font-size:.65rem;font-weight:600;cursor:pointer}.faq-categories button:hover,.faq-categories button.active{border-color:var(--green);color:var(--season-surface);background:var(--green)}#faq-count{margin:12px 0 0;color:var(--muted);font-family:var(--mono);font-size:.6rem}.faq-list{display:grid;gap:10px}.faq-item{border:1px solid var(--line);background:color-mix(in srgb,var(--season-surface) 94%,transparent);box-shadow:0 7px 18px color-mix(in srgb,var(--season-route) 5%,transparent)}.faq-item[hidden]{display:none}.faq-item summary{display:grid;grid-template-columns:46px 1fr 20px;gap:18px;align-items:center;padding:20px 22px;cursor:pointer;list-style:none}.faq-item summary::-webkit-details-marker{display:none}.faq-item summary>span{color:var(--accent);font-family:var(--mono);font-size:.7rem;font-weight:700}.faq-item summary small{color:var(--green);font-family:var(--mono);font-size:.58rem;letter-spacing:.08em}.faq-item h2{margin:4px 0 0;font-size:1rem;line-height:1.55}.faq-item summary i{position:relative;width:16px;height:16px}.faq-item summary i::before,.faq-item summary i::after{content:'';position:absolute;left:0;top:7px;width:16px;border-top:2px solid var(--green);transition:.2s}.faq-item summary i::after{transform:rotate(90deg)}.faq-item[open] summary i::after{transform:rotate(0)}.faq-item[open] summary{border-bottom:1px dashed var(--line)}.faq-answer{padding:22px 22px 24px 86px}.faq-answer p{max-width:850px;margin:0;color:color-mix(in srgb,var(--season-text) 86%,var(--season-muted));font-size:.9rem;line-height:1.9}.faq-answer a{display:inline-flex;align-items:center;gap:6px;margin-top:14px;color:var(--green);font-size:.75rem;font-weight:700}.faq-empty{padding:70px 20px;text-align:center;border:1px dashed var(--line-bright);background:var(--season-surface-2)}.faq-empty svg{color:var(--accent)}.faq-empty h2{margin:12px 0 5px}.faq-empty p{margin:0;color:var(--muted);font-size:.82rem}
+  @media(max-width:650px){.faq-tools{position:static}.faq-item summary{grid-template-columns:32px 1fr 18px;gap:10px;padding:17px 14px}.faq-answer{padding:18px 14px 20px 56px}}
+</style>
