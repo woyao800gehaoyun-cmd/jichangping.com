@@ -5,6 +5,7 @@ description: 填写经过核验的品牌简介、目标用户与核心使用边�
 platforms: []
 strengths: []
 limitations: []
+affiliate: false
 reviewedAt: 2026-10-03
 status: 资料整理中
 draft: true
@@ -24,4 +25,4 @@ draft: true
 
 ## 价格与退款
 
-记录首期、续费与退款条件，不添加未披露的推广链接。
+记录首期、续费与退款条件。推广链接必须明确披露。

@@ -30,6 +30,8 @@ const brands = defineCollection({
     platforms: z.array(z.string()).default([]),
     strengths: z.array(z.string()).default([]),
     limitations: z.array(z.string()).default([]),
+    externalUrl: z.string().url().optional(),
+    affiliate: z.boolean().default(false),
     reviewedAt: z.coerce.date(),
     status: z.enum(['已评测', '待复查', '资料整理中']).default('资料整理中'),
     draft: z.boolean().default(true)
